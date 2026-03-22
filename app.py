@@ -187,7 +187,6 @@ with st.sidebar:
 
     destination = st.text_input(
         "Destination",
-        value="Kyoto, Japan",
         placeholder="e.g. Lisbon, Portugal",
     )
 
@@ -302,13 +301,8 @@ with st.sidebar:
 
     st.divider()
 
-    mode = st.radio(
-        "Generation mode",
-        options=["mock", "claude"],
-        index=0,
-        horizontal=True,
-        help="**Mock**: instant demo data. **Claude**: real AI generation (needs API key).",
-    )
+    # Mode is always claude for users; mock is only used internally for tests
+    mode = "claude"
 
     generate_btn = st.button(
         "🚀 Generate Itinerary",

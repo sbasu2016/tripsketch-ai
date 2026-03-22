@@ -186,3 +186,41 @@ class TestCharCounterCSS:
             content = f.read()
         assert "InputInstructions" in content
         assert "display: none" in content
+
+
+class TestUIDefaults:
+    """Verify destination has no pre-filled value and mock mode is hidden."""
+
+    def test_no_prefilled_destination(self):
+        """Destination should not have Kyoto or any pre-filled value."""
+        with open("app.py") as f:
+            content = f.read()
+        # Should not have value="Kyoto, Japan" or any value= on destination
+        assert 'value="Kyoto' not in content
+
+    def test_mock_mode_not_visible(self):
+        """Mock mode radio should not be shown to users."""
+        with open("app.py") as f:
+            content = f.read()
+        assert '"mock", "claude"' not in content
+        assert "Generation mode" not in content
+
+    def test_mode_hardcoded_to_claude(self):
+        """Mode should be hardcoded to claude."""
+        with open("app.py") as f:
+            content = f.read()
+        assert 'mode = "claude"' in content
+
+    def test_mock_mode_still_works_internally(self):
+        """Mock mode should still work in llm_service for tests."""
+        from services.itinerary_service import create_itinerary
+        result = create_itinerary(
+            destination="Tokyo",
+            trip_length_days=1,
+            budget_level="Budget",
+            travel_style=[],
+            interests=[],
+            pace="Balanced",
+            mode="mock",
+        )
+        assert result["destination"] == "Tokyo"
