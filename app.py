@@ -832,44 +832,33 @@ if "itinerary" in st.session_state:
     # Share link
     st.markdown("**🔗 Share This Trip**")
 
-    # Gist-based sharing (short URL) — only if token is configured
     try:
         from services.share_service import create_gist, _get_github_token
         if _get_github_token():
-            if st.button("📤 Create short shareable link", use_container_width=True):
+            if st.button("📤 Create and copy shareable link", use_container_width=True):
                 with st.spinner("Creating share link..."):
                     gist_id = create_gist(itin)
                 if gist_id:
+                    _share_url = f"https://tripsketch-ai.streamlit.app/?gist={gist_id}"
+                    # Auto-copy to clipboard via JS
                     st.markdown(
-                        f'<a href="?gist={gist_id}" target="_blank" '
-                        f'style="color: #e74c3c; font-weight: 600; '
-                        f'font-size: 1rem; text-decoration: none;">'
-                        f'Click here to open shareable link</a>',
+                        f"""
+                        <script>
+                        navigator.clipboard.writeText("{_share_url}").catch(function() {{}});
+                        </script>
+                        <p style="color: #3a7a3a; font-weight: 600; font-size: 0.95rem;">
+                            ✅ Link copied to clipboard!
+                        </p>
+                        <p style="font-size: 0.82rem; color: #909090; word-break: break-all;">
+                            {_share_url}
+                        </p>
+                        """,
                         unsafe_allow_html=True,
-                    )
-                    st.caption(
-                        "Right-click the link and choose 'Copy link address' to share. "
-                        "Short enough for iMessage, DMs, anywhere."
                     )
                 else:
                     st.error("Failed to create share link. Try again.")
-    except Exception:
-        pass
-
-    # Always show compressed URL fallback
-    try:
-        from utils.url_compress import compress_itinerary
-        encoded = compress_itinerary(itin)
-        if len(encoded) < 8000:
-            with st.expander("📎 Long shareable link (no account needed)"):
-                st.markdown(
-                    f'<a href="?trip={encoded}" target="_blank" '
-                    f'style="color: #e74c3c; word-break: break-all; '
-                    f'font-size: 0.85rem; text-decoration: none;">'
-                    f'Click here to open full link</a>',
-                    unsafe_allow_html=True,
-                )
-                st.caption("This link is long but works anywhere — no account needed.")
+        else:
+            st.caption("To enable sharing, add a GITHUB_GIST_TOKEN to your Streamlit secrets.")
     except Exception:
         pass
 
