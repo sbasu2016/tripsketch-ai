@@ -208,6 +208,7 @@ Features under consideration for future versions:
 - **Save, favorite, and revisit past trips** — persist itineraries to a database, mark favorites, and reload or share them later
 - **Regenerate one full day** — rebuild a single day without touching the rest
 - **Multi-city trips** — itineraries spanning multiple destinations with inter-city transit
+- **Reservation and booking alerts** — flag places that require advance tickets, reservations, or bookings, with links to purchase and recommended lead times
 
 ---
 
