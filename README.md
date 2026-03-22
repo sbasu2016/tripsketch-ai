@@ -96,11 +96,12 @@ tripsketch-ai/
 │   ├── test_costs.py                # Cost engine — all 4 tiers (18 tests)
 │   ├── test_formatters.py           # Export format tests (17 tests)
 │   ├── test_swap.py                 # Item swap + context + dedup + regenerate (22 tests)
-│   ├── test_share.py                # Share link encode/decode (11 tests)
+│   ├── test_share.py                # Share link + URL compression (18 tests)
 │   ├── test_itinerary_checker.py    # Preference matching (43 tests)
 │   ├── test_proximity.py            # Geographic proximity (17 tests)
 │   ├── test_theme.py                # CSS color scheme + WCAG contrast (37 tests)
 │   └── test_validators.py           # Input validation + char limits (37 tests)
+│   └── test_url_compress.py          # URL compression round-trip (22 tests)
 ├── assets/
 │   └── logo.svg
 ├── requirements.txt
@@ -186,7 +187,7 @@ Every item links to its Google Maps listing with reviews and photos. The map use
 pytest tests/ -v
 ```
 
-230 tests across 9 test files.
+252 tests across 10 test files.
 
 ---
 
@@ -220,7 +221,7 @@ Features under consideration for future versions:
 - **Leaflet + Google Maps tiles** — map visualization
 - **Google Places API** — place ratings and metadata (optional)
 - **python-dotenv** — environment management
-- **pytest** — 230 tests across 9 files
+- **pytest** — 252 tests across 10 files
 
 ---
 

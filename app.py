@@ -573,13 +573,20 @@ def render_map(itinerary: dict) -> None:
 _query_params = st.query_params
 if "trip" in _query_params and "itinerary" not in st.session_state:
     try:
-        compressed = base64.urlsafe_b64decode(_query_params["trip"])
-        raw_json = zlib.decompress(compressed).decode("utf-8")
-        st.session_state["itinerary"] = json.loads(raw_json)
+        from utils.url_compress import decompress_itinerary
+        st.session_state["itinerary"] = decompress_itinerary(_query_params["trip"])
         st.session_state["generation_mode"] = "shared"
         st.info("📩 Viewing a shared trip! Generate your own using the sidebar.")
     except Exception:
-        st.warning("Could not load the shared trip link.")
+        # Fall back to old format (unminified) for backwards compatibility
+        try:
+            compressed = base64.urlsafe_b64decode(_query_params["trip"])
+            raw_json = zlib.decompress(compressed).decode("utf-8")
+            st.session_state["itinerary"] = json.loads(raw_json)
+            st.session_state["generation_mode"] = "shared"
+            st.info("📩 Viewing a shared trip! Generate your own using the sidebar.")
+        except Exception:
+            st.warning("Could not load the shared trip link.")
 
 
 # ---------------------------------------------------------------------------
@@ -795,9 +802,8 @@ if "itinerary" in st.session_state:
 
     # Share link
     try:
-        itin_json = json.dumps(itin, ensure_ascii=False, separators=(",", ":"))
-        compressed = zlib.compress(itin_json.encode("utf-8"), level=9)
-        encoded = base64.urlsafe_b64encode(compressed).decode("ascii")
+        from utils.url_compress import compress_itinerary
+        encoded = compress_itinerary(itin)
 
         # Only show share if the encoded data isn't too long for a URL
         if len(encoded) < 8000:

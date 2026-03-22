@@ -148,3 +148,63 @@ class TestShareUrlSafety:
         encoded = _encode_trip(_sample())
         assert "+" not in encoded
         assert "/" not in encoded
+
+
+class TestMinifiedCompression:
+    """Test the url_compress module that minifies keys for shorter URLs."""
+
+    def test_roundtrip(self):
+        from utils.url_compress import compress_itinerary, decompress_itinerary
+        original = _sample()
+        encoded = compress_itinerary(original)
+        decoded = decompress_itinerary(encoded)
+        assert decoded["destination"] == "Kyoto, Japan"
+        assert decoded["days"][0]["items"][0]["title"] == "Fushimi Inari"
+
+    def test_shorter_than_raw(self):
+        """Minified compression should be shorter than raw base64."""
+        from utils.url_compress import compress_itinerary
+        original = _sample()
+        minified = compress_itinerary(original)
+        raw = _encode_trip(original)
+        assert len(minified) < len(raw)
+
+    def test_strips_descriptions(self):
+        """Shared URL should not contain descriptions."""
+        from utils.url_compress import compress_itinerary, decompress_itinerary
+        original = _sample()
+        original["days"][0]["items"][0]["description"] = "A very long description that adds bytes"
+        decoded = decompress_itinerary(compress_itinerary(original))
+        # Description should be empty (stripped) or default
+        assert decoded["days"][0]["items"][0]["description"] == ""
+
+    def test_strips_coordinates(self):
+        """Shared URL should strip lat/lng but fill defaults on decode."""
+        from utils.url_compress import compress_itinerary, decompress_itinerary
+        decoded = decompress_itinerary(compress_itinerary(_sample()))
+        item = decoded["days"][0]["items"][0]
+        assert item["latitude"] == 0.0
+        assert item["longitude"] == 0.0
+
+    def test_preserves_titles_and_costs(self):
+        from utils.url_compress import compress_itinerary, decompress_itinerary
+        decoded = decompress_itinerary(compress_itinerary(_sample()))
+        item = decoded["days"][0]["items"][0]
+        assert item["title"] == "Fushimi Inari"
+        assert item["estimated_cost"] == 0
+
+    def test_preserves_day_structure(self):
+        from utils.url_compress import compress_itinerary, decompress_itinerary
+        decoded = decompress_itinerary(compress_itinerary(_sample()))
+        assert decoded["days"][0]["theme"] == "Historic Kyoto"
+        assert decoded["days"][0]["day_number"] == 1
+
+    def test_under_2000_chars_for_4day_trip(self):
+        """A 4-day trip share URL should be under 2000 chars for iMessage."""
+        from utils.url_compress import compress_itinerary
+        import json as _json
+        with open("data/sample_trip.json") as f:
+            trip = _json.load(f)
+        encoded = compress_itinerary(trip)
+        full_url_len = len(encoded) + 50  # approximate base URL
+        assert full_url_len < 2000, f"URL too long: {full_url_len} chars"
