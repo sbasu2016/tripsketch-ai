@@ -571,6 +571,22 @@ def render_map(itinerary: dict) -> None:
 # Load shared trip from URL if present
 # ---------------------------------------------------------------------------
 _query_params = st.query_params
+
+# Gist-based sharing (short URLs)
+if "gist" in _query_params and "itinerary" not in st.session_state:
+    try:
+        from services.share_service import load_gist
+        _gist_data = load_gist(_query_params["gist"])
+        if _gist_data:
+            st.session_state["itinerary"] = _gist_data
+            st.session_state["generation_mode"] = "shared"
+            st.info("📩 Viewing a shared trip! Generate your own using the sidebar.")
+        else:
+            st.warning("Could not load the shared trip. The link may have expired.")
+    except Exception:
+        st.warning("Could not load the shared trip link.")
+
+# Legacy compressed URL sharing
 if "trip" in _query_params and "itinerary" not in st.session_state:
     try:
         from utils.url_compress import decompress_itinerary
@@ -578,7 +594,6 @@ if "trip" in _query_params and "itinerary" not in st.session_state:
         st.session_state["generation_mode"] = "shared"
         st.info("📩 Viewing a shared trip! Generate your own using the sidebar.")
     except Exception:
-        # Fall back to old format (unminified) for backwards compatibility
         try:
             compressed = base64.urlsafe_b64decode(_query_params["trip"])
             raw_json = zlib.decompress(compressed).decode("utf-8")
@@ -782,7 +797,16 @@ if "itinerary" in st.session_state:
         .lower()
     )
 
-    col_json, col_txt = st.columns(2)
+    col_pdf, col_json, col_txt = st.columns(3)
+    with col_pdf:
+        from utils.pdf_export import itinerary_to_pdf
+        st.download_button(
+            label="⬇ Download PDF",
+            data=itinerary_to_pdf(itin),
+            file_name=f"tripsketch_{safe_name}.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
     with col_json:
         st.download_button(
             label="⬇ Download JSON",
@@ -801,30 +825,58 @@ if "itinerary" in st.session_state:
         )
 
     # Share link
+    st.markdown("**🔗 Share This Trip**")
+    _share_created = False
+
+    # Try gist-based sharing first (short URL)
     try:
-        from utils.url_compress import compress_itinerary
-        encoded = compress_itinerary(itin)
-
-        # Only show share if the encoded data isn't too long for a URL
-        if len(encoded) < 8000:
-            st.markdown("**🔗 Share This Trip**")
-
-            # Show as a clickable link that reloads the current page with the trip param
-            st.markdown(
-                f'<a href="?trip={encoded}" target="_blank" '
-                f'style="color: #e74c3c; font-weight: 600; '
-                f'font-size: 1rem; text-decoration: none;">'
-                f'Click here to open shareable link</a>',
-                unsafe_allow_html=True,
-            )
-            st.caption(
-                "Right-click the link above and choose 'Copy link address' to share. "
-                "Anyone who opens it will see the full itinerary."
-            )
+        from services.share_service import create_gist, _get_github_token
+        if _get_github_token():
+            if st.button("📤 Create shareable link", use_container_width=True):
+                with st.spinner("Creating share link..."):
+                    gist_id = create_gist(itin)
+                if gist_id:
+                    share_url = f"?gist={gist_id}"
+                    st.markdown(
+                        f'<a href="{share_url}" target="_blank" '
+                        f'style="color: #e74c3c; font-weight: 600; '
+                        f'font-size: 1rem; text-decoration: none;">'
+                        f'Click here to open shareable link</a>',
+                        unsafe_allow_html=True,
+                    )
+                    st.caption(
+                        "Right-click the link and choose 'Copy link address' to share. "
+                        "Works in iMessage, DMs, anywhere."
+                    )
+                    _share_created = True
+                else:
+                    st.error("Failed to create share link. Try again or use the download options.")
         else:
-            st.caption("Trip is too large to share via link. Use the JSON download instead.")
+            _share_created = False  # No token — fall through to compressed URL
     except Exception:
         pass
+
+    # Fallback: compressed URL (long but works without token)
+    if not _share_created:
+        try:
+            from utils.url_compress import compress_itinerary
+            encoded = compress_itinerary(itin)
+            if len(encoded) < 8000:
+                st.markdown(
+                    f'<a href="?trip={encoded}" target="_blank" '
+                    f'style="color: #e74c3c; font-weight: 600; '
+                    f'font-size: 1rem; text-decoration: none;">'
+                    f'Click here to open shareable link</a>',
+                    unsafe_allow_html=True,
+                )
+                st.caption(
+                    "Right-click the link and choose 'Copy link address' to share. "
+                    "Note: this link is long — for shorter links, add a GITHUB_GIST_TOKEN to your secrets."
+                )
+            else:
+                st.caption("Trip is too large to share via link. Use the JSON download instead.")
+        except Exception:
+            pass
 
     # Regenerate button
     if st.button("🔄 Regenerate Trip", use_container_width=True):

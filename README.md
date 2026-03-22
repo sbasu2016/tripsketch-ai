@@ -24,7 +24,7 @@ TripSketch AI takes a destination, budget, travel style, and interests as input 
 - **📍 Google Places ratings** when configured with a Google Maps API key
 - **Google Maps links** that open the actual place listing with reviews and photos
 - **🔗 Shareable trip link** — generate a URL anyone can open to see your itinerary
-- **Export options** — download as JSON, plain text, or copy a quick summary
+- **Export options** — download as styled PDF, JSON, or plain text, plus a copyable quick summary
 - **Regenerate trip** button to start fresh
 
 It works instantly in mock mode (no API key needed) or generates real itineraries via the Claude API.
@@ -154,7 +154,7 @@ Each item has a Swap button that generates a replacement for that specific time 
 Toggle in the sidebar. Instructs the AI to prefer indoor activities — museums, covered markets, workshops, cafés, galleries, cooking classes.
 
 ### 🔗 Shareable Trip Link
-After generating a trip, the export section shows a compressed URL you can copy and share. Anyone who opens it sees the full itinerary with map, tabs, and export — no account or API key needed.
+After generating a trip, click "Create shareable link" to get a short URL powered by GitHub Gist. The link is short enough for iMessage, Instagram DMs, or any messaging app. Anyone who opens it sees the full itinerary with map, descriptions, and export options — no account needed. Falls back to compressed URL if no GitHub token is configured.
 
 ### 📍 Google Maps & Places Integration
 Every item links to its Google Maps listing with reviews and photos. The map uses Google Maps tiles via Leaflet with color-coded markers. Optionally connect a Google Places API key for real ratings and addresses.
@@ -205,7 +205,6 @@ Features under consideration for future versions:
 - **Transit routing** — show specific train/bus routes between stops with estimated times and costs
 - **Hotel-area-aware planning** — start each day's route from the traveler's accommodation
 - **Cuisine filters** — vegetarian, halal, gluten-free as first-class form inputs
-- **PDF export** — styled downloadable itinerary
 - **Save, favorite, and revisit past trips** — persist itineraries to a database, mark favorites, and reload or share them later
 - **Regenerate one full day** — rebuild a single day without touching the rest
 - **Multi-city trips** — itineraries spanning multiple destinations with inter-city transit
