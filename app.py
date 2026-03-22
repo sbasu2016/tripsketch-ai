@@ -826,19 +826,17 @@ if "itinerary" in st.session_state:
 
     # Share link
     st.markdown("**🔗 Share This Trip**")
-    _share_created = False
 
-    # Try gist-based sharing first (short URL)
+    # Gist-based sharing (short URL) — only if token is configured
     try:
         from services.share_service import create_gist, _get_github_token
         if _get_github_token():
-            if st.button("📤 Create shareable link", use_container_width=True):
+            if st.button("📤 Create short shareable link", use_container_width=True):
                 with st.spinner("Creating share link..."):
                     gist_id = create_gist(itin)
                 if gist_id:
-                    share_url = f"?gist={gist_id}"
                     st.markdown(
-                        f'<a href="{share_url}" target="_blank" '
+                        f'<a href="?gist={gist_id}" target="_blank" '
                         f'style="color: #e74c3c; font-weight: 600; '
                         f'font-size: 1rem; text-decoration: none;">'
                         f'Click here to open shareable link</a>',
@@ -846,37 +844,29 @@ if "itinerary" in st.session_state:
                     )
                     st.caption(
                         "Right-click the link and choose 'Copy link address' to share. "
-                        "Works in iMessage, DMs, anywhere."
+                        "Short enough for iMessage, DMs, anywhere."
                     )
-                    _share_created = True
                 else:
-                    st.error("Failed to create share link. Try again or use the download options.")
-        else:
-            _share_created = False  # No token — fall through to compressed URL
+                    st.error("Failed to create share link. Try again.")
     except Exception:
         pass
 
-    # Fallback: compressed URL (long but works without token)
-    if not _share_created:
-        try:
-            from utils.url_compress import compress_itinerary
-            encoded = compress_itinerary(itin)
-            if len(encoded) < 8000:
+    # Always show compressed URL fallback
+    try:
+        from utils.url_compress import compress_itinerary
+        encoded = compress_itinerary(itin)
+        if len(encoded) < 8000:
+            with st.expander("📎 Long shareable link (no account needed)"):
                 st.markdown(
                     f'<a href="?trip={encoded}" target="_blank" '
-                    f'style="color: #e74c3c; font-weight: 600; '
-                    f'font-size: 1rem; text-decoration: none;">'
-                    f'Click here to open shareable link</a>',
+                    f'style="color: #e74c3c; word-break: break-all; '
+                    f'font-size: 0.85rem; text-decoration: none;">'
+                    f'Click here to open full link</a>',
                     unsafe_allow_html=True,
                 )
-                st.caption(
-                    "Right-click the link and choose 'Copy link address' to share. "
-                    "Note: this link is long — for shorter links, add a GITHUB_GIST_TOKEN to your secrets."
-                )
-            else:
-                st.caption("Trip is too large to share via link. Use the JSON download instead.")
-        except Exception:
-            pass
+                st.caption("This link is long but works anywhere — no account needed.")
+    except Exception:
+        pass
 
     # Regenerate button
     if st.button("🔄 Regenerate Trip", use_container_width=True):

@@ -123,3 +123,55 @@ class TestPDFInRequirements:
         with open("requirements.txt") as f:
             content = f.read()
         assert "fpdf2" in content
+
+
+class TestPDFSanitize:
+    def test_sanitize_em_dash(self):
+        """Em dash should be replaced with hyphen."""
+        from utils.pdf_export import _sanitize
+        assert "\u2014" not in _sanitize("Hello \u2014 World")
+        assert "-" in _sanitize("Hello \u2014 World")
+
+    def test_sanitize_smart_quotes(self):
+        from utils.pdf_export import _sanitize
+        result = _sanitize("\u201cHello\u201d")
+        assert "\u201c" not in result
+        assert '"' in result
+
+    def test_sanitize_preserves_ascii(self):
+        from utils.pdf_export import _sanitize
+        assert _sanitize("Hello World 123") == "Hello World 123"
+
+    def test_sanitize_japanese_replaced(self):
+        """Japanese chars can't be in latin-1, should be replaced."""
+        from utils.pdf_export import _sanitize
+        result = _sanitize("京都")
+        # Should not crash, chars get replaced with ?
+        assert isinstance(result, str)
+
+
+class TestPDFSanitize:
+    def test_em_dash_replaced(self):
+        """Em dash should be replaced with hyphen."""
+        from utils.pdf_export import _sanitize
+        assert _sanitize("TripSketch AI \u2014 Kyoto") == "TripSketch AI - Kyoto"
+
+    def test_smart_quotes_replaced(self):
+        from utils.pdf_export import _sanitize
+        assert _sanitize("\u201cHello\u201d") == '"Hello"'
+
+    def test_ellipsis_replaced(self):
+        from utils.pdf_export import _sanitize
+        assert _sanitize("Wait\u2026") == "Wait..."
+
+    def test_plain_ascii_unchanged(self):
+        from utils.pdf_export import _sanitize
+        assert _sanitize("Hello World 123") == "Hello World 123"
+
+    def test_non_latin1_stripped(self):
+        """Characters that can't encode to latin-1 should be replaced."""
+        from utils.pdf_export import _sanitize
+        result = _sanitize("Test \u4eac\u90fd")  # 京都
+        assert isinstance(result, str)
+        # Should not crash, chars replaced with ?
+        assert "Test" in result
