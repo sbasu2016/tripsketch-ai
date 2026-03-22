@@ -799,14 +799,19 @@ if "itinerary" in st.session_state:
 
     col_pdf, col_json, col_txt = st.columns(3)
     with col_pdf:
-        from utils.pdf_export import itinerary_to_pdf
-        st.download_button(
-            label="⬇ Download PDF",
-            data=itinerary_to_pdf(itin),
-            file_name=f"tripsketch_{safe_name}.pdf",
-            mime="application/pdf",
-            use_container_width=True,
-        )
+        try:
+            from utils.pdf_export import itinerary_to_pdf
+            _pdf_data = itinerary_to_pdf(itin)
+            st.download_button(
+                label="⬇ Download PDF",
+                data=_pdf_data,
+                file_name=f"tripsketch_{safe_name}.pdf",
+                mime="application/pdf",
+                use_container_width=True,
+            )
+        except Exception as _pdf_err:
+            st.button("⬇ Download PDF", disabled=True, use_container_width=True)
+            st.caption(f"PDF generation failed: {_pdf_err}")
     with col_json:
         st.download_button(
             label="⬇ Download JSON",

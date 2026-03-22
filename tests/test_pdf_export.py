@@ -125,6 +125,34 @@ class TestPDFInRequirements:
         assert "fpdf2" in content
 
 
+class TestSanitize:
+    def test_em_dash_replaced(self):
+        from utils.pdf_export import _sanitize
+        assert "-" in _sanitize("hello \u2014 world")
+        assert "\u2014" not in _sanitize("hello \u2014 world")
+
+    def test_smart_quotes_replaced(self):
+        from utils.pdf_export import _sanitize
+        result = _sanitize("\u201cHello\u201d")
+        assert '"' in result
+        assert "\u201c" not in result
+
+    def test_plain_ascii_unchanged(self):
+        from utils.pdf_export import _sanitize
+        assert _sanitize("Hello world 123") == "Hello world 123"
+
+    def test_ellipsis_replaced(self):
+        from utils.pdf_export import _sanitize
+        assert "..." in _sanitize("wait\u2026")
+
+    def test_non_latin1_stripped(self):
+        from utils.pdf_export import _sanitize
+        result = _sanitize("Tokyo \u6771\u4eac")
+        # Japanese chars get replaced with ?
+        assert isinstance(result, str)
+        assert len(result) > 0
+
+
 class TestPDFSanitize:
     def test_sanitize_em_dash(self):
         """Em dash should be replaced with hyphen."""

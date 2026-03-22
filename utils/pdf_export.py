@@ -1,8 +1,8 @@
 """
 pdf_export.py — Generate a styled PDF from an itinerary dict.
 
-Uses fpdf2 for lightweight PDF generation. All text is sanitized
-to replace Unicode characters that Helvetica can't encode.
+Uses fpdf2 for lightweight PDF generation. Handles Unicode by
+sanitizing special characters that the default fonts can't render.
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ import re
 
 
 def _sanitize(text: str) -> str:
-    """Replace Unicode chars that Helvetica can't encode with ASCII equivalents."""
+    """Replace Unicode characters that Helvetica can't render."""
     replacements = {
         "\u2014": "-",   # em dash
         "\u2013": "-",   # en dash
@@ -22,11 +22,14 @@ def _sanitize(text: str) -> str:
         "\u2026": "...", # ellipsis
         "\u2022": "-",   # bullet
         "\u00a0": " ",   # non-breaking space
-        "\u2212": "-",   # minus sign
-        "\u00b7": "-",   # middle dot
+        "\u00e9": "e",   # e-acute
+        "\u00e8": "e",   # e-grave
+        "\u00e0": "a",   # a-grave
+        "\u00fc": "u",   # u-umlaut
+        "\u00f1": "n",   # n-tilde
     }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
+    for orig, repl in replacements.items():
+        text = text.replace(orig, repl)
     # Strip any remaining non-latin1 characters
     text = text.encode("latin-1", errors="replace").decode("latin-1")
     return text
@@ -46,12 +49,12 @@ def itinerary_to_pdf(itinerary: dict) -> bytes:
 
     # ---- Title ----
     pdf.set_font("Helvetica", "B", 22)
-    dest = _sanitize(str(itinerary.get("destination", "Trip Itinerary")))
+    dest = _sanitize(itinerary.get("destination", "Trip Itinerary"))
     pdf.cell(0, 12, f"TripSketch AI - {dest}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
 
     # ---- Summary ----
-    summary = _sanitize(str(itinerary.get("summary", "")))
+    summary = _sanitize(itinerary.get("summary", ""))
     if summary:
         pdf.set_font("Helvetica", "", 10)
         pdf.set_text_color(100, 100, 100)
@@ -61,7 +64,7 @@ def itinerary_to_pdf(itinerary: dict) -> bytes:
 
     # ---- Trip info line ----
     days = itinerary.get("trip_length_days", "?")
-    budget = itinerary.get("budget_level", "?")
+    budget = _sanitize(str(itinerary.get("budget_level", "?")))
     total = itinerary.get("estimated_total_cost", 0)
     avg = itinerary.get("daily_cost_average", 0)
     pdf.set_font("Helvetica", "", 9)
@@ -74,16 +77,14 @@ def itinerary_to_pdf(itinerary: dict) -> bytes:
     pdf.set_text_color(0, 0, 0)
     pdf.ln(6)
 
-    # ---- Divider ----
     _draw_divider(pdf)
 
     # ---- Days ----
     for day in itinerary.get("days", []):
         day_num = day.get("day_number", "?")
-        theme = _sanitize(str(day.get("theme", "")))
+        theme = _sanitize(day.get("theme", ""))
         day_cost = day.get("estimated_day_cost", 0)
 
-        # Day header
         pdf.set_font("Helvetica", "B", 14)
         pdf.cell(0, 8, f"Day {day_num}: {theme}", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font("Helvetica", "", 8)
@@ -92,17 +93,15 @@ def itinerary_to_pdf(itinerary: dict) -> bytes:
         pdf.set_text_color(0, 0, 0)
         pdf.ln(3)
 
-        # Group items by time block
         current_block = None
         for item in day.get("items", []):
-            time_block = item.get("time_block", "")
-            title = _sanitize(str(item.get("title", "Untitled")))
+            time_block = _sanitize(item.get("time_block", ""))
+            title = _sanitize(item.get("title", "Untitled"))
             item_type = item.get("type", "activity")
-            description = _sanitize(str(item.get("description", "")))
+            description = _sanitize(item.get("description", ""))
             cost = item.get("estimated_cost", 0)
             cost_str = f"${cost}" if cost else "Free"
 
-            # Time block header
             if time_block != current_block:
                 current_block = time_block
                 pdf.ln(2)
@@ -111,7 +110,6 @@ def itinerary_to_pdf(itinerary: dict) -> bytes:
                 pdf.cell(0, 5, time_block.upper(), new_x="LMARGIN", new_y="NEXT")
                 pdf.set_text_color(0, 0, 0)
 
-            # Item
             type_label = "MEAL" if item_type == "meal" else "ACTIVITY"
             pdf.set_font("Helvetica", "B", 11)
             pdf.cell(0, 6, f"{title}  [{type_label}]", new_x="LMARGIN", new_y="NEXT")
