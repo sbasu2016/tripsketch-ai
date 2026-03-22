@@ -1,0 +1,301 @@
+{
+  "destination": "Kyoto, Japan",
+  "trip_length_days": 4,
+  "budget_level": "Moderate",
+  "travel_style": ["Culinary", "Culture"],
+  "interests": ["Temples", "Markets", "Street Food"],
+  "pace": "Balanced",
+  "summary": "A balanced four-day Kyoto trip focused on food, temples, and scenic neighborhoods. From the vermilion corridors of Fushimi Inari to the bamboo whispers of Arashiyama, this itinerary blends iconic landmarks with hidden local gems at a moderate budget.",
+  "estimated_total_cost": 620,
+  "daily_cost_average": 155,
+  "days": [
+    {
+      "day_number": 1,
+      "theme": "Historic Kyoto",
+      "estimated_day_cost": 140,
+      "items": [
+        {
+          "time_block": "Morning",
+          "title": "Fushimi Inari Shrine",
+          "type": "activity",
+          "description": "Walk the thousands of vermilion torii gates up the mountainside. Arrive by 7 AM to experience the trail in near-solitude.",
+          "estimated_cost": 0,
+          "location_name": "Fushimi Inari Taisha",
+          "latitude": 34.9671,
+          "longitude": 135.7727
+        },
+        {
+          "time_block": "Lunch",
+          "title": "Nishiki Market Street Food",
+          "type": "meal",
+          "description": "Kyoto's 400-year-old kitchen. Graze on tamagoyaki, mochi, pickles, and fresh tofu from dozens of stalls.",
+          "estimated_cost": 18,
+          "location_name": "Nishiki Market",
+          "latitude": 35.0050,
+          "longitude": 135.7650
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Kiyomizu-dera Temple",
+          "type": "activity",
+          "description": "Iconic hilltop temple with a massive wooden stage overlooking the city. Walk through charming Higashiyama lanes on the approach.",
+          "estimated_cost": 6,
+          "location_name": "Kiyomizu-dera",
+          "latitude": 34.9949,
+          "longitude": 135.7850
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Sannen-zaka and Ninen-zaka Lanes",
+          "type": "activity",
+          "description": "Atmospheric stone-paved streets lined with traditional shops, tea houses, and craft stores.",
+          "estimated_cost": 5,
+          "location_name": "Sannen-zaka",
+          "latitude": 34.9955,
+          "longitude": 135.7808
+        },
+        {
+          "time_block": "Dinner",
+          "title": "Pontocho Alley Dinner",
+          "type": "meal",
+          "description": "Narrow atmospheric alley along the Kamo River. Try obanzai — Kyoto-style home cooking served as small seasonal plates.",
+          "estimated_cost": 30,
+          "location_name": "Pontocho Alley",
+          "latitude": 35.0046,
+          "longitude": 135.7710
+        },
+        {
+          "time_block": "Evening",
+          "title": "Gion Evening Walk",
+          "type": "activity",
+          "description": "Stroll through Kyoto's geisha district at dusk. Walk Hanami-koji street — you may spot a maiko heading to an appointment.",
+          "estimated_cost": 0,
+          "location_name": "Gion District",
+          "latitude": 35.0037,
+          "longitude": 135.7755
+        }
+      ]
+    },
+    {
+      "day_number": 2,
+      "theme": "Arashiyama and the West",
+      "estimated_day_cost": 155,
+      "items": [
+        {
+          "time_block": "Morning",
+          "title": "Arashiyama Bamboo Grove",
+          "type": "activity",
+          "description": "Walk through towering bamboo at sunrise before the crowds. The rustling canopy overhead is mesmerizing.",
+          "estimated_cost": 0,
+          "location_name": "Arashiyama Bamboo Grove",
+          "latitude": 35.0170,
+          "longitude": 135.6713
+        },
+        {
+          "time_block": "Morning",
+          "title": "Tenryu-ji Temple Garden",
+          "type": "activity",
+          "description": "UNESCO World Heritage Zen temple with one of Japan's finest landscape gardens backed by the Arashiyama mountains.",
+          "estimated_cost": 8,
+          "location_name": "Tenryu-ji Temple",
+          "latitude": 35.0156,
+          "longitude": 135.6745
+        },
+        {
+          "time_block": "Lunch",
+          "title": "Yudofu at Sagano",
+          "type": "meal",
+          "description": "Kyoto's signature tofu cuisine — silky hot tofu in simple dashi broth with seasonal vegetables.",
+          "estimated_cost": 15,
+          "location_name": "Sagano Area",
+          "latitude": 35.0180,
+          "longitude": 135.6700
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Monkey Park Iwatayama",
+          "type": "activity",
+          "description": "Hilltop park with wild macaques roaming freely. Panoramic views of Kyoto from the summit.",
+          "estimated_cost": 6,
+          "location_name": "Iwatayama Monkey Park",
+          "latitude": 35.0105,
+          "longitude": 135.6780
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Togetsukyo Bridge and River Walk",
+          "type": "activity",
+          "description": "Cross the iconic Moon Crossing Bridge and walk along the Katsura River. Rent a boat if the weather is good.",
+          "estimated_cost": 0,
+          "location_name": "Togetsukyo Bridge",
+          "latitude": 35.0106,
+          "longitude": 135.6778
+        },
+        {
+          "time_block": "Dinner",
+          "title": "Kaiseki Dinner at Gion Nanba",
+          "type": "meal",
+          "description": "Refined multi-course traditional dinner featuring seasonal Kyoto ingredients. A splurge-worthy cultural experience.",
+          "estimated_cost": 55,
+          "location_name": "Gion Nanba",
+          "latitude": 35.0040,
+          "longitude": 135.7748
+        }
+      ]
+    },
+    {
+      "day_number": 3,
+      "theme": "Northern Kyoto and Gardens",
+      "estimated_day_cost": 165,
+      "items": [
+        {
+          "time_block": "Morning",
+          "title": "Kinkaku-ji (Golden Pavilion)",
+          "type": "activity",
+          "description": "The gold-leaf pavilion reflected in its mirror pond is one of Japan's most iconic images. Go early for the best light.",
+          "estimated_cost": 5,
+          "location_name": "Kinkaku-ji",
+          "latitude": 35.0394,
+          "longitude": 135.7292
+        },
+        {
+          "time_block": "Morning",
+          "title": "Ryoan-ji Rock Garden",
+          "type": "activity",
+          "description": "Japan's most famous Zen rock garden — 15 stones in raked gravel. Sit on the wooden veranda and contemplate.",
+          "estimated_cost": 5,
+          "location_name": "Ryoan-ji Temple",
+          "latitude": 35.0345,
+          "longitude": 135.7184
+        },
+        {
+          "time_block": "Lunch",
+          "title": "Ramen at Ippudo Kyoto",
+          "type": "meal",
+          "description": "Rich tonkotsu ramen from one of Japan's best chains. The Kyoto location offers a regional seasonal special.",
+          "estimated_cost": 12,
+          "location_name": "Ippudo Kyoto",
+          "latitude": 35.0090,
+          "longitude": 135.7680
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Philosopher's Path Walk",
+          "type": "activity",
+          "description": "Peaceful two-kilometer canal-side path lined with cherry and maple trees connecting Ginkaku-ji to Nanzen-ji.",
+          "estimated_cost": 0,
+          "location_name": "Philosopher's Path",
+          "latitude": 35.0233,
+          "longitude": 135.7943
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Nanzen-ji Temple and Aqueduct",
+          "type": "activity",
+          "description": "Massive Zen temple complex with a striking brick aqueduct. The views from the Sanmon gate are worth the climb.",
+          "estimated_cost": 6,
+          "location_name": "Nanzen-ji Temple",
+          "latitude": 35.0112,
+          "longitude": 135.7933
+        },
+        {
+          "time_block": "Dinner",
+          "title": "Izakaya Hopping in Kiyamachi",
+          "type": "meal",
+          "description": "Bar-hop along the Kiyamachi canal. Try yakitori, edamame, and local craft beer across two or three cozy spots.",
+          "estimated_cost": 35,
+          "location_name": "Kiyamachi Street",
+          "latitude": 35.0040,
+          "longitude": 135.7700
+        },
+        {
+          "time_block": "Evening",
+          "title": "Yasaka Shrine Night Visit",
+          "type": "activity",
+          "description": "The illuminated shrine at the edge of Gion is atmospheric at night. Free entry and a quiet close to the day.",
+          "estimated_cost": 0,
+          "location_name": "Yasaka Shrine",
+          "latitude": 35.0036,
+          "longitude": 135.7785
+        }
+      ]
+    },
+    {
+      "day_number": 4,
+      "theme": "Tea, Crafts, and Farewell",
+      "estimated_day_cost": 160,
+      "items": [
+        {
+          "time_block": "Morning",
+          "title": "Uji Tea Town Day Trip",
+          "type": "activity",
+          "description": "Short train ride to Japan's tea capital. Visit Byodo-in Temple and taste premium matcha at the source.",
+          "estimated_cost": 10,
+          "location_name": "Uji, Kyoto",
+          "latitude": 34.8892,
+          "longitude": 135.8078
+        },
+        {
+          "time_block": "Morning",
+          "title": "Matcha Tasting at Nakamura Tokichi",
+          "type": "meal",
+          "description": "Centuries-old tea house serving matcha parfaits, green tea soba, and freshly whisked ceremonial matcha.",
+          "estimated_cost": 14,
+          "location_name": "Nakamura Tokichi Honten",
+          "latitude": 34.8895,
+          "longitude": 135.8080
+        },
+        {
+          "time_block": "Lunch",
+          "title": "Soba Lunch at Honke Owariya",
+          "type": "meal",
+          "description": "One of Kyoto's oldest restaurants, operating since 1465. Order the hourai soba — five tiers of buckwheat noodles served in lacquerware.",
+          "estimated_cost": 18,
+          "location_name": "Honke Owariya",
+          "latitude": 35.0095,
+          "longitude": 135.7610
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Kyoto Handicraft Center",
+          "type": "activity",
+          "description": "Browse and buy traditional crafts — ceramics, fans, textiles, and woodblock prints. You can try hands-on workshops.",
+          "estimated_cost": 15,
+          "location_name": "Kyoto Handicraft Center",
+          "latitude": 35.0159,
+          "longitude": 135.7848
+        },
+        {
+          "time_block": "Afternoon",
+          "title": "Tea Ceremony Experience",
+          "type": "activity",
+          "description": "Participate in a traditional 45-minute tea ceremony led by an English-speaking host in a tatami room.",
+          "estimated_cost": 30,
+          "location_name": "Camellia Garden",
+          "latitude": 35.0030,
+          "longitude": 135.7760
+        },
+        {
+          "time_block": "Dinner",
+          "title": "Farewell Tempura at Yoshikawa",
+          "type": "meal",
+          "description": "Sit at the counter and watch the chef prepare delicate seasonal tempura piece by piece. A memorable final dinner.",
+          "estimated_cost": 45,
+          "location_name": "Tempura Yoshikawa",
+          "latitude": 35.0100,
+          "longitude": 135.7630
+        },
+        {
+          "time_block": "Evening",
+          "title": "Kamo River Sunset",
+          "type": "activity",
+          "description": "End your trip sitting on the banks of the Kamo River, watching the sunset paint the water golden. Pure Kyoto magic.",
+          "estimated_cost": 0,
+          "location_name": "Kamo River",
+          "latitude": 35.0043,
+          "longitude": 135.7720
+        }
+      ]
+    }
+  ]
+}

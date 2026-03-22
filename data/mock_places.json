@@ -1,0 +1,72 @@
+{
+  "Fushimi Inari Taisha": {
+    "display_name": "Fushimi Inari Taisha",
+    "formatted_address": "68 Fukakusa Yabunouchicho, Fushimi-ku, Kyoto 612-0882",
+    "latitude": 34.9671,
+    "longitude": 135.7727,
+    "rating": 4.6
+  },
+  "Nishiki Market": {
+    "display_name": "Nishiki Market",
+    "formatted_address": "Nishikikoji-dori, Nakagyo-ku, Kyoto 604-8054",
+    "latitude": 35.0050,
+    "longitude": 135.7650,
+    "rating": 4.4
+  },
+  "Kiyomizu-dera": {
+    "display_name": "Kiyomizu-dera",
+    "formatted_address": "1-294 Kiyomizu, Higashiyama-ku, Kyoto 605-0862",
+    "latitude": 34.9949,
+    "longitude": 135.7850,
+    "rating": 4.5
+  },
+  "Arashiyama Bamboo Grove": {
+    "display_name": "Arashiyama Bamboo Grove",
+    "formatted_address": "Sagaogurayama Tabuchiyamacho, Ukyo Ward, Kyoto",
+    "latitude": 35.0170,
+    "longitude": 135.6713,
+    "rating": 4.5
+  },
+  "Tenryu-ji Temple": {
+    "display_name": "Tenryu-ji Temple",
+    "formatted_address": "68 Sagatenryuji Susukinobabacho, Ukyo Ward, Kyoto",
+    "latitude": 35.0156,
+    "longitude": 135.6745,
+    "rating": 4.5
+  },
+  "Kinkaku-ji": {
+    "display_name": "Kinkaku-ji (Golden Pavilion)",
+    "formatted_address": "1 Kinkakujicho, Kita Ward, Kyoto 603-8361",
+    "latitude": 35.0394,
+    "longitude": 135.7292,
+    "rating": 4.6
+  },
+  "Gion District": {
+    "display_name": "Gion District",
+    "formatted_address": "Gion, Higashiyama-ku, Kyoto",
+    "latitude": 35.0037,
+    "longitude": 135.7755,
+    "rating": 4.4
+  },
+  "Pontocho Alley": {
+    "display_name": "Pontocho Alley",
+    "formatted_address": "Pontocho, Nakagyo-ku, Kyoto",
+    "latitude": 35.0046,
+    "longitude": 135.7710,
+    "rating": 4.3
+  },
+  "Philosopher's Path": {
+    "display_name": "Philosopher's Path",
+    "formatted_address": "Shishigatani, Sakyo-ku, Kyoto",
+    "latitude": 35.0233,
+    "longitude": 135.7943,
+    "rating": 4.5
+  },
+  "Nanzen-ji Temple": {
+    "display_name": "Nanzen-ji Temple",
+    "formatted_address": "86 Nanzenji Fukuchicho, Sakyo Ward, Kyoto",
+    "latitude": 35.0112,
+    "longitude": 135.7933,
+    "rating": 4.5
+  }
+}
