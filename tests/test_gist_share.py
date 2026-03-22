@@ -80,3 +80,45 @@ class TestGistIntegration:
         serialized = json.dumps(itin, ensure_ascii=False, indent=2)
         assert "Osaka" in serialized
         assert len(serialized) > 50
+
+
+class TestShareURLFormat:
+    def test_gist_url_is_short(self):
+        """A gist-based URL should be well under 100 chars."""
+        fake_gist_id = "abc123def456"
+        url = f"https://tripsketch-ai.streamlit.app/?gist={fake_gist_id}"
+        assert len(url) < 100
+
+    def test_gist_url_contains_gist_param(self):
+        fake_gist_id = "abc123def456"
+        url = f"https://tripsketch-ai.streamlit.app/?gist={fake_gist_id}"
+        assert "?gist=" in url
+
+    def test_gist_url_no_special_chars(self):
+        """Gist IDs are alphanumeric — URL should be safe for any messenger."""
+        fake_gist_id = "a1b2c3d4e5f6"
+        url = f"https://tripsketch-ai.streamlit.app/?gist={fake_gist_id}"
+        # No spaces, no brackets, no unicode
+        assert " " not in url
+        assert "[" not in url
+
+
+class TestAppShareSection:
+    def test_no_clipboard_js_in_app(self):
+        """Clipboard JS was removed — should not be in app.py."""
+        with open("app.py") as f:
+            content = f.read()
+        assert "navigator.clipboard" not in content
+
+    def test_no_long_url_fallback(self):
+        """Long compressed URL fallback was removed."""
+        with open("app.py") as f:
+            content = f.read()
+        assert "Long shareable link" not in content
+        assert "no account needed" not in content
+
+    def test_text_input_for_share_url(self):
+        """Share URL should be shown in a text_input for easy copying."""
+        with open("app.py") as f:
+            content = f.read()
+        assert "share_url_display" in content

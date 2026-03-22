@@ -835,25 +835,15 @@ if "itinerary" in st.session_state:
     try:
         from services.share_service import create_gist, _get_github_token
         if _get_github_token():
-            if st.button("📤 Create and copy shareable link", use_container_width=True):
+            if st.button("📤 Create shareable link", use_container_width=True):
                 with st.spinner("Creating share link..."):
                     gist_id = create_gist(itin)
                 if gist_id:
                     _share_url = f"https://tripsketch-ai.streamlit.app/?gist={gist_id}"
-                    # Auto-copy to clipboard via JS
-                    st.markdown(
-                        f"""
-                        <script>
-                        navigator.clipboard.writeText("{_share_url}").catch(function() {{}});
-                        </script>
-                        <p style="color: #3a7a3a; font-weight: 600; font-size: 0.95rem;">
-                            ✅ Link copied to clipboard!
-                        </p>
-                        <p style="font-size: 0.82rem; color: #909090; word-break: break-all;">
-                            {_share_url}
-                        </p>
-                        """,
-                        unsafe_allow_html=True,
+                    st.text_input(
+                        "Your shareable link (select all and copy):",
+                        value=_share_url,
+                        key="share_url_display",
                     )
                 else:
                     st.error("Failed to create share link. Try again.")

@@ -187,7 +187,7 @@ Every item links to its Google Maps listing with reviews and photos. The map use
 pytest tests/ -v
 ```
 
-252 tests across 10 test files.
+291 tests across 12 test files.
 
 ---
 
@@ -220,7 +220,7 @@ Features under consideration for future versions:
 - **Leaflet + Google Maps tiles** — map visualization
 - **Google Places API** — place ratings and metadata (optional)
 - **python-dotenv** — environment management
-- **pytest** — 252 tests across 10 files
+- **pytest** — 291 tests across 12 files
 
 ---
 
