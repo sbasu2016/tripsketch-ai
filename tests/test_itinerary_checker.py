@@ -229,6 +229,30 @@ class TestDietaryPreferences:
         warnings = check_dietary_preferences(itin, "I'm vegetarian")
         assert len(warnings) == 0
 
+    def test_flags_seafood_for_vegetarian(self):
+        """Vegetarians don't eat seafood — should flag it."""
+        itin = _itinerary(days=[
+            _day(1, [_item("Fish Market", "Lunch", "meal", "Famous seafood restaurant")]),
+        ])
+        warnings = check_dietary_preferences(itin, "vegetarian")
+        assert len(warnings) >= 1
+
+    def test_flags_sushi_for_vegetarian(self):
+        """Sushi with fish is not vegetarian."""
+        itin = _itinerary(days=[
+            _day(1, [_item("Sushi Bar", "Dinner", "meal", "Fresh sushi and sashimi platters")]),
+        ])
+        warnings = check_dietary_preferences(itin, "vegetarian")
+        assert len(warnings) >= 1
+
+    def test_flags_seafood_for_vegan(self):
+        """Vegans don't eat seafood either."""
+        itin = _itinerary(days=[
+            _day(1, [_item("Lobster House", "Dinner", "meal", "Fresh lobster and shrimp")]),
+        ])
+        warnings = check_dietary_preferences(itin, "vegan")
+        assert len(warnings) >= 1
+
     def test_checks_description_not_just_title(self):
         itin = _itinerary(days=[
             _day(1, [_item("Local Restaurant", "Dinner", "meal", "Famous for their grilled chicken skewers")]),

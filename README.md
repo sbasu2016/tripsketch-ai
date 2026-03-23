@@ -2,7 +2,7 @@
 
 > AI-powered travel itinerary generator — enter a destination and preferences, get a structured day-by-day plan with cost estimates, an interactive map, and a shareable link.
 
-**[Live Demo →](https://tripsketch-ai.streamlit.app)** · Built with Python, Streamlit, Claude API, Leaflet, and Google Maps tiles
+**[Live Demo →](https://tripsketch-ai.streamlit.app)** · AI-powered travel itinerary generator
 
 ---
 
@@ -32,23 +32,38 @@ TripSketch AI takes a destination, budget, travel style, and interests as input 
 ## Screenshots
 
 <img width="1623" alt="Kyoto_Main_Warnings" src="https://github.com/user-attachments/assets/f25aae56-47cb-40d8-b2ff-d52da10d3131" />
+
 *Kyoto 4-day itinerary prioritizing culture, culinary and social experiences. Warnings shown are related to distance (>8km apart).*
----
+
+<br>
+
 <img width="1622" alt="Kyoto_Day1" src="https://github.com/user-attachments/assets/cd740d87-b1f8-4418-88be-8ed28866f3de" />
+
 *Kyoto Day 1 itinerary includes must-see place Fushimi Inari Taisha, and several other places chosen according to interests and notes (specified cherry blossoms).*
----
+
+<br>
+
 <img width="1624" alt="Kyoto_Day_3" src="https://github.com/user-attachments/assets/28a3fa5a-dcb9-4f65-b800-1a6d4dacaab4" />
+
 *Kyoto Day 3 itinerary includes must-see place Arashiyama Bamboo Grove, Michelin-star and hidden gem restaurants (fine dining), nightlife and bars, photography and cherry blossoms.*
----
-<img width="1622" height="1287" alt="Kyoto_Map" src="https://github.com/user-attachments/assets/9d77ff7f-a928-42a3-bf24-8ee315fedfb9" />
+
+<br>
+
+<img width="1622" alt="Kyoto_Map" src="https://github.com/user-attachments/assets/9d77ff7f-a928-42a3-bf24-8ee315fedfb9" />
+
 *Kyoto Map shows proximity across suggestions. Different export and share options.*
----
+
+<br>
+
 <img width="1619" alt="SF_rain_day" src="https://github.com/user-attachments/assets/b8212d83-9411-412d-9381-29b7189bd5a7" />
+
 *San Francisco budget "stay-cation" with friends visiting for a (rainy) weekend of indoor activities: museums, bowling, and craft beer and wine.*
----
+
+<br>
+
 <img width="1619" alt="SF_Vegan_options" src="https://github.com/user-attachments/assets/73841633-7584-47aa-988d-61753a5a1492" />
+
 *Food options shown respect dietary restrictions. Restaurants are all vegan friendly. Map shows proximity across suggested locations.*
----
 
 ## Quick Start
 
@@ -111,13 +126,14 @@ tripsketch-ai/
 │   ├── test_formatters.py           # Export format tests (17 tests)
 │   ├── test_swap.py                 # Item swap + context + dedup + regenerate (22 tests)
 │   ├── test_share.py                # Share link encode/decode (18 tests)
-│   ├── test_itinerary_checker.py    # Preference matching (43 tests)
+│   ├── test_itinerary_checker.py    # Preference matching (46 tests)
 │   ├── test_proximity.py            # Geographic proximity (17 tests)
 │   ├── test_theme.py                # CSS color scheme + WCAG contrast (37 tests)
-│   ├── test_validators.py           # Input validation + char limits (41 tests)
+│   ├── test_validators.py           # Input validation + char limits + UI defaults (41 tests)
 │   ├── test_url_compress.py         # URL compression round-trip (22 tests)
 │   ├── test_gist_share.py           # Gist sharing + URL format (13 tests)
-│   └── test_pdf_export.py           # PDF export + Unicode handling (19 tests)
+│   ├── test_pdf_export.py           # PDF export + Unicode handling (23 tests)
+│   └── test_live_pipeline.py        # Live/claude mode pipeline quality (27 tests)
 ├── assets/
 │   └── logo.svg
 ├── requirements.txt
@@ -192,7 +208,7 @@ Every item links to its Google Maps listing with reviews and photos. The map use
 pytest tests/ -v
 ```
 
-295 tests across 12 test files.
+325 tests across 13 test files.
 
 ---
 
@@ -219,4 +235,4 @@ Features under consideration for future versions:
 - **Google Places API** — place ratings and metadata (optional)
 - **fpdf2** — PDF export
 - **python-dotenv** — environment management
-- **pytest** — 295 tests across 12 files
+- **pytest** — 325 tests across 13 files
